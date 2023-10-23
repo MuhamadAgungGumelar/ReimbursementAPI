@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using ReimbursementAPI.Utilities.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReimbursementAPI.Models
 {
