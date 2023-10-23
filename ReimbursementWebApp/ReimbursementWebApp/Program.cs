@@ -18,6 +18,17 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "landing",
+        pattern: "{controller=Home}/{action=LandingPage}/{id?}");
+
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
