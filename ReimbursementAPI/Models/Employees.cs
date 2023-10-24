@@ -4,10 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ReimbursementAPI.Models
 {
     [Table("tb_m_employees")] //penamaan tabel pada orm
-    public class Employee
+    public class Employees : BaseEntity
     {
-        [Column("nik", TypeName = "nchar(6)")] //penamaan column pada orm
-        public string Nik { get; set; } //property pada model
         [Column("first_name", TypeName = "nvarchar(100)")] //penamaan column pada orm
         public string FirstName { get; set; } //property pada model
         [Column("last_name", TypeName = "nvarchar(100)")] //penamaan column pada orm
@@ -22,5 +20,7 @@ namespace ReimbursementAPI.Models
         public string Email { get; set; } //property pada model
         [Column("phone_number", TypeName = "nvarchar(20)")] //penamaan column pada orm
         public string PhoneNumber { get; set; } //property pada model
+        [Column("manager_guid")]
+        public Guid ManagerGuid { get; set; }
     }
 }
