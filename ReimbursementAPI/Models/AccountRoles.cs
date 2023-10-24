@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 
 namespace ReimbursementAPI.Models
 {
@@ -9,5 +10,9 @@ namespace ReimbursementAPI.Models
         public Guid AccountGuid { get; set; }
         [Column("role_guid")]
         public Guid RoleGuid { get; set; }
+
+        //cardinality
+        public Roles? Role { get; set; }
+        public Accounts? Accounts { get; set; }
     }
 }

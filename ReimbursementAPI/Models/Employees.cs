@@ -22,5 +22,11 @@ namespace ReimbursementAPI.Models
         public string PhoneNumber { get; set; } //property pada model
         [Column("manager_guid")]
         public Guid ManagerGuid { get; set; }
+
+        //Cardinality
+        public ICollection<Reimbursements>? Reimbursements { get; set; }
+        public ICollection<Finances>? Finances { get; set; }
+        public Accounts? Accounts { get; set; }
+
     }
 }

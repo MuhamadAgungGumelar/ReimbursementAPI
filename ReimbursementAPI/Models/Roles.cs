@@ -7,5 +7,8 @@ namespace ReimbursementAPI.Models
     {
         [Column("name", TypeName = "varchar(100)")]
         public string Name { get; set; }
+
+        //Cardinality
+        public ICollection<AccountRoles>? AccountRoles { get; set; }
     }
 }

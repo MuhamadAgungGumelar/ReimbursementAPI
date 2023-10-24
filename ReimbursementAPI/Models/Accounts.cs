@@ -13,5 +13,9 @@ namespace ReimbursementAPI.Models
         public bool IsUsed { get; set; }
         [Column("expired_time", TypeName = "datetime2")]
         public DateTime ExpiredTime { get; set; }
+
+        //Cardinality
+        public ICollection<AccountRoles>? AccountRoles { get; set; }
+        public Employees? Employees { get; set; }
     }
 }

@@ -13,5 +13,9 @@ namespace ReimbursementAPI.Models
         public DateTime ApprovedDate { get; set; }
         [Column("approved_amount", TypeName = "int")]
         public int ApprovedAmount { get; set; }
+
+        //Cardinality
+        public Employees? Employees { get; set; }
+        public Reimbursements? Reimbursements { get; set; }
     }
 }

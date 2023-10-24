@@ -20,5 +20,9 @@ namespace ReimbursementAPI.Models
         public byte[] Image { get; set; }
         [Column("status", TypeName = "int")]
         public StatusLevel Status { get; set; }
+
+        //Cardinality
+        public Employees? Employees { get; set; }
+        public Finances? Finances { get; set; }
     }
 }
