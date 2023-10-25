@@ -23,6 +23,11 @@ namespace ReimbursementWebApp.Controllers
             return View();
         }
 
+        public IActionResult ProfilePage()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
