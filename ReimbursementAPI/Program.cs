@@ -1,6 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using ReimbursementAPI.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection"); //mengambil connectionstring
+builder.Services.AddDbContext<ReimbursementDBContext>(options => options.UseSqlServer(connectionString)); //menginstance db context
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
