@@ -18,15 +18,31 @@ namespace ReimbursementWebApp.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         public IActionResult LandingPage()
         {
             return View();
         }
+
+        public IActionResult Reimbursement()
+        {
+            return View();
+        }
+        public IActionResult Manager()
+        {
+            return View();
+        }
+
+        public IActionResult Finance()
+        {
+            return View();
+        }
+
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
