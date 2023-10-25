@@ -19,15 +19,7 @@ namespace ReimbursementAPI.DTO.Account
 
         public string PhoneNumber { get; set; }
 
-        public string Major { get; set; }
-
-        public string Degree { get; set; }
-
-        public float GPA { get; set; }
-
-        public string UniversityCode { get; set; }
-
-        public string UniversityName { get; set; }
+        public Guid ManagerGuid { get; set; }
 
         public string Password { get; set; }
 
@@ -44,6 +36,7 @@ namespace ReimbursementAPI.DTO.Account
                 HiringDate = dto.HiringDate,
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
+                ManagerGuid = dto.ManagerGuid,
                 CreatedDate = DateTime.Now,
                 ModifiedDate = DateTime.Now,
             };
