@@ -12,7 +12,7 @@ namespace ReimbursementAPI.DTO.Employee
         public DateTime HiringDate { get; set; } //deklarasi property
         public string Email { get; set; } //deklarasi property
         public string PhoneNumber { get; set; } //deklarasi property
-        public Guid ManagerGuid { get; set; }
+        public Guid? ManagerGuid { get; set; }
 
         public static implicit operator Employees(NewEmployeesDto dto) //implementasi implicit Operator
         {
@@ -25,6 +25,7 @@ namespace ReimbursementAPI.DTO.Employee
                 HiringDate = dto.HiringDate,
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
+                ManagerGuid = dto.ManagerGuid,
                 CreatedDate = DateTime.Now,
                 ModifiedDate = DateTime.Now,
             };
