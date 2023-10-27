@@ -3,7 +3,7 @@ using ReimbursementAPI.Utilities.Enums;
 
 namespace ReimbursementAPI.DTO.Account
 {
-    public class RegisterAccountsRequestDto : GeneralDto
+    public class RegisterAccountsRequestDto
     {
         public string FirstName { get; set; }
 
@@ -19,7 +19,7 @@ namespace ReimbursementAPI.DTO.Account
 
         public string PhoneNumber { get; set; }
 
-        public Guid ManagerGuid { get; set; }
+        public Guid? ManagerGuid { get; set; }
 
         public string Password { get; set; }
 

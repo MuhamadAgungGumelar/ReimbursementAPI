@@ -5,7 +5,7 @@ namespace ReimbursementAPI.Contracts
 {
     public interface IAccountRepository : IGeneralRepository<Accounts>
     {
-        RegisterAccountsRequestDto? Register(RegisterAccountsRequestDto request, bool isValid);
+        RegisterAccountResponseDto? Register(RegisterAccountsRequestDto request);
         Employees? Login(string email);
     }
 }

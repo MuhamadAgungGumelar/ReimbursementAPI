@@ -9,5 +9,12 @@ namespace ReimbursementAPI.Repository
         public EmployeeRepository(ReimbursementDBContext context) : base(context)
         {
         }
+
+        public Employees? GetByEmail(string email)
+        {
+            var employee = _context.Set<Employees>().FirstOrDefault(e => e.Email == email); //mengambil data employee berdasarkan email
+
+            return employee;
+        }
     }
 }
