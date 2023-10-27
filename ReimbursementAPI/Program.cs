@@ -1,5 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using ReimbursementAPI.Contracts;
 using ReimbursementAPI.Data;
+using ReimbursementAPI.Repository;
+using ReimbursementAPI.Utilities.Handler;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +13,53 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection"); //mengambil connectionstring
 builder.Services.AddDbContext<ReimbursementDBContext>(options => options.UseSqlServer(connectionString)); //menginstance db context
 
+// Add Repositories to the Conatainer
+builder.Services.AddScoped<IRoleRepository, RoleRepository>(); //menginstance Roles Repo
+builder.Services.AddScoped<IAccountRoleRepository, AccountRoleRepository>(); //menginstance AccountRole Repo
+builder.Services.AddScoped<IAccountRepository, AccountRepository>(); //menginstance Accounts Repo
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>(); //menginstance Employee Repo
+builder.Services.AddScoped<IFinanceRepository, FinanceRepository>(); //menginstance Finance Repo
+builder.Services.AddScoped<IReimbursementRepository, ReimbursementRepository>(); //menginstance Reimbursement Repo
+builder.Services.AddScoped<ITokenHandler, ReimbursementAPI.Utilities.Handler.TokenHandler>(); //menginstance Token Repo
+
+// Add Handler Service to Controller
+builder.Services.AddTransient<IEmailHandler, EmailHandler>(_ => new EmailHandler(
+        builder.Configuration["SmtpService:Server"],
+        int.Parse(builder.Configuration["SmtpService:Port"]),
+        builder.Configuration["SmtpService:FromEmailAddress"]
+    ));
+
 builder.Services.AddControllers();
+
+//JWT Authentication Configuration
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false; //dev only
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["JWTService:Issuer"],
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["JWTService:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTService:SecretKey"])),
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+//add cors
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin();
+        policy.AllowAnyHeader();
+        policy.WithMethods("GET", "POST", "DELETE", "PUT", "OPTIONS");
+    });
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

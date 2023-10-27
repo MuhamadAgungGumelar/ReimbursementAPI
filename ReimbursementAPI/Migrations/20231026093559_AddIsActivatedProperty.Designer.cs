@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReimbursementAPI.Data;
 
@@ -11,9 +12,10 @@ using ReimbursementAPI.Data;
 namespace ReimbursementAPI.Migrations
 {
     [DbContext(typeof(ReimbursementDBContext))]
-    partial class ReimbursementDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231026093559_AddIsActivatedProperty")]
+    partial class AddIsActivatedProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -131,7 +133,7 @@ namespace ReimbursementAPI.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("last_name");
 
-                    b.Property<Guid?>("ManagerGuid")
+                    b.Property<Guid>("ManagerGuid")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("manager_guid");
 

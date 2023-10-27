@@ -7,6 +7,7 @@ namespace ReimbursementAPI.DTO.Account
         public int Otp { get; set; } //deklarasi property
         public string Password { get; set; }
         public bool IsUsed { get; set; } //deklarasi property
+        public bool IsActivated { get; set; }
         public DateTime ExpiredTime { get; set; }
 
         public static explicit operator AccountsDto(Accounts accounts) //implementasi explicit Operator
@@ -17,6 +18,7 @@ namespace ReimbursementAPI.DTO.Account
                 Password = accounts.Password,
                 Otp = accounts.Otp,
                 IsUsed = accounts.IsUsed,
+                IsActivated = accounts.IsActivated,
                 ExpiredTime = accounts.ExpiredTime,
             };
         }
@@ -29,6 +31,7 @@ namespace ReimbursementAPI.DTO.Account
                 Password = accountsDto.Password,
                 Otp = accountsDto.Otp,
                 IsUsed = accountsDto.IsUsed,
+                IsActivated = accountsDto.IsActivated,
                 ExpiredTime = accountsDto.ExpiredTime,
                 ModifiedDate = DateTime.Now
             };

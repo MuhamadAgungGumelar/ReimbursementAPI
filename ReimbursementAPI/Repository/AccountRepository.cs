@@ -21,7 +21,7 @@ namespace ReimbursementAPI.Repository
 
         }
 
-        public RegisterAccountsRequestDto? Register(RegisterAccountsRequestDto request, bool isValid)
+        public RegisterAccountResponseDto? Register(RegisterAccountsRequestDto request)
         {
             var transaction = _context.Database.BeginTransaction(); //melakukan inisiasi transaction
             try
@@ -34,6 +34,7 @@ namespace ReimbursementAPI.Repository
                 employee.HiringDate = request.HiringDate;
                 employee.Email = request.Email;
                 employee.PhoneNumber = request.PhoneNumber;
+                employee.ManagerGuid = request.ManagerGuid;
                 employee.CreatedDate = DateTime.Now;
                 employee.ModifiedDate = DateTime.Now;
 
@@ -43,12 +44,14 @@ namespace ReimbursementAPI.Repository
                 var newEmployee = _context.Set<Employees>().Where(e => e.Email == employee.Email).FirstOrDefault();
                 _context.ChangeTracker.Clear(); //melakukan clear changetracker
 
+                var otp = OtpHandler.GenerateRandomOtp(); //melakukan generate otp
                 var account = new Accounts(); //melakukan inject data baru ke dalam object account
                 account.Guid = newEmployee.Guid;
                 account.Password = HashHandler.HashPassword(request.Password); //melakukan hash password yang akan disimpan
-                account.Otp = 0;
-                account.IsUsed = true;
-                account.ExpiredTime = DateTime.Now;
+                account.Otp = otp;
+                account.IsUsed = false;
+                account.IsActivated = false;
+                account.ExpiredTime = DateTime.Now.AddDays(1);
                 account.CreatedDate = DateTime.Now;
                 account.ModifiedDate = DateTime.Now;
                 _context.Set<Accounts>().Add(account); //melakukan add account baru ke database
@@ -64,7 +67,11 @@ namespace ReimbursementAPI.Repository
                 _context.SaveChanges(); //melakukan save kedalam database
 
                 transaction.Commit(); //melakukan commit transaction setelah semua berhasil
-                return request; //mengembalikan data request
+                return new RegisterAccountResponseDto
+                {
+                    Email = employee.Email,
+                    Otp = account.Otp,
+                }; //mengembalikan data request
             }
             catch (Exception ex)
             {

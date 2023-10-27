@@ -12,7 +12,7 @@ namespace ReimbursementAPI.DTO.Employee
         public DateTime HiringDate { get; set; } //deklarasi property
         public string Email { get; set; } //deklarasi property
         public string PhoneNumber { get; set; } //deklarasi property
-        public Guid ManagerGuid { get; set; } //deklarasi property
+        public Guid? ManagerGuid { get; set; } //deklarasi property
 
         public static explicit operator EmployeesDto(Employees employee) //implementasi explicit Operator
         {
