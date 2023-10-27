@@ -11,6 +11,8 @@ namespace ReimbursementAPI.Models
         public int Otp { get; set; }
         [Column("is_used", TypeName = "int")]
         public bool IsUsed { get; set; }
+        [Column("is_activated", TypeName = "int")]
+        public bool IsActivated { get; set; }
         [Column("expired_time", TypeName = "datetime2")]
         public DateTime ExpiredTime { get; set; }
 
