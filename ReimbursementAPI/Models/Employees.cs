@@ -21,7 +21,7 @@ namespace ReimbursementAPI.Models
         [Column("phone_number", TypeName = "nvarchar(20)")] //penamaan column pada orm
         public string PhoneNumber { get; set; } //property pada model
         [Column("manager_guid")]
-        public Guid ManagerGuid { get; set; }
+        public Guid? ManagerGuid { get; set; }
 
         //Cardinality
         public ICollection<Reimbursements>? Reimbursements { get; set; }
