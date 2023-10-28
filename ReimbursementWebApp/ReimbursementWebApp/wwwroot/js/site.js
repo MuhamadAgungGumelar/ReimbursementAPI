@@ -4,6 +4,8 @@
 
     // Memilih elemen konten dinamis
     const dynamicContent = $("#dynamic_content");
+    const pageLink1 = $("main.main-content nav.navbar div.container-fluid nav.nav-pages ol.breadcrumb li.active");
+    const pageLink2 = $("main.main-content nav.navbar div.container-fluid nav.nav-pages h6");
 
     // Menambahkan event click pada tautan di dalam navbar
     navLinks.click(function (e) {
@@ -22,7 +24,6 @@
 
         // Mengirim permintaan AJAX
         $.get(url, function (data) {
-            console.log(data)
             // Ekstrak konten yang sesuai dari respons AJAX
             const newContent = $(data).find("#container-fluid");
 
@@ -30,8 +31,6 @@
             dynamicContent.html(newContent);
 
             // Perbarui breadcrumb atau judul halaman seperti yang telah Anda lakukan
-            const pageLink1 = $("main.main-content nav.navbar div.container-fluid nav.nav-pages ol.breadcrumb li.active");
-            const pageLink2 = $("main.main-content nav.navbar div.container-fluid nav.nav-pages h6");
             pageLink1.text(pageName);
             pageLink2.text(pageName);
 

@@ -27,6 +27,12 @@ namespace ReimbursementWebApp.Controllers
         {
             return View();
         }
+
+        public IActionResult ReimbursementForm()
+        {
+            return View();
+        }
+
         public IActionResult Manager()
         {
             return View();
