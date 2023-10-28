@@ -1,0 +1,63 @@
+﻿<div class="container-fluid py-4" id="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Reimbursement Form</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <form class="form">
+                            <div class="row justify-content-center">
+                                <div class="col-6">
+                                    <div class="mb-4 d-flex justify-content-center">
+                                        <img class="img-fluid img-thumbnail rounded" id="selectedImage" src="~/assets/img/upload-preview.png"
+                                             alt="example placeholder" style="width: 500px;" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label">Receipt Reimbursement</label>
+                                        <input class="form-control" type="file" id="formFile" accept="image/*" onchange="previewImage(event)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="reimbursement-name-column">Reimbursement Name</label>
+                                        <input type="text" id="reimbursement-name-column" class="form-control" placeholder="Reimbursement Name" name="fname-column">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="value-column">Value</label>
+                                        <input type="number" id="value-column" class="form-control" placeholder="Value" name="value-column">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="status-column">Status</label>
+                                        <input type="number" id="status-column" class="form-control" name="status-column" placeholder="Status">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="description-column">Description</label>
+                                        <input type="text" id="description-column" class="form-control" name="description-column" placeholder="Description">
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
+                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/reimbursement.js" asp-append-version="true"></script>
+}
