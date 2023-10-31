@@ -1,4 +1,6 @@
-﻿<div class="container-fluid py-4" id="container-fluid">
+﻿@model ReimbursementWebApp.Models.CreateReimburseViewModel
+
+<div class="container-fluid py-4" id="container-fluid">
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -7,7 +9,11 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form">
+                        <form asp-action="CreateReimbursement" class="form" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div id="employeeGuid" style="display: none;">
+                                <input asp-for="EmployeeGuid" value="@* dapetin employeeGuid dari session *@" />
+                            </div>
                             <div class="row justify-content-center">
                                 <div class="col-6">
                                     <div class="mb-4 d-flex justify-content-center">
@@ -16,7 +22,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="formFile" class="form-label">Receipt Reimbursement</label>
-                                        <input class="form-control" type="file" id="formFile" accept="image/*" onchange="previewImage(event)">
+                                        <input asp-for="ImageFile" class="form-control" type="file" id="ImageFile" accept="image/*" onchange="previewImage(event)" />
                                     </div>
                                 </div>
                             </div>
@@ -24,25 +30,25 @@
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="reimbursement-name-column">Reimbursement Name</label>
-                                        <input type="text" id="reimbursement-name-column" class="form-control" placeholder="Reimbursement Name" name="fname-column">
+                                        <input asp-for="Name" type="text" id="reimbursement-name-column" class="form-control" placeholder="Reimbursement Name" name="Name">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="value-column">Value</label>
-                                        <input type="number" id="value-column" class="form-control" placeholder="Value" name="value-column">
+                                        <input asp-for="Value" type="number" id="value-column" class="form-control" placeholder="Value" name="Value">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="status-column">Status</label>
-                                        <input type="number" id="status-column" class="form-control" name="status-column" placeholder="Status">
+                                        <input asp-for="Status" type="number" id="status-column" class="form-control" name="Status" placeholder="Status">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="description-column">Description</label>
-                                        <input type="text" id="description-column" class="form-control" name="description-column" placeholder="Description">
+                                        <input asp-for="Description" type="text" id="description-column" class="form-control" name="Description" placeholder="Description">
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">
