@@ -6,6 +6,7 @@ using ReimbursementAPI.Contracts;
 using ReimbursementAPI.DTO.Account;
 using ReimbursementAPI.Models;
 using ReimbursementAPI.Utilities.Handler;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using static System.Net.WebRequestMethods;
@@ -375,6 +376,7 @@ namespace ReimbursementAPI.Controllers
 
             //Token Handler
             var payload = new List<Claim>();
+            payload.Add(new Claim("Id", $"{employee.Guid}"));
             payload.Add(new Claim("Email", employee.Email));
             payload.Add(new Claim("FullName", string.Concat(employee.FirstName, " ", employee.LastName)));
 
