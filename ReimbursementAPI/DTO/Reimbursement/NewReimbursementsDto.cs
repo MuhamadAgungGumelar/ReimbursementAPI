@@ -12,7 +12,6 @@ namespace ReimbursementAPI.DTO.Reimbursement
         public string ImageType { get; set; }
         public byte[] Image { get; set; }
         public StatusLevel Status { get; set; }
-        public IFormFile ImageFile { get; set; }
 
         public static implicit operator Reimbursements(NewReimbursementsDto dto)
         {
