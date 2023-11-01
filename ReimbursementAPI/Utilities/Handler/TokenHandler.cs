@@ -27,5 +27,13 @@ namespace ReimbursementAPI.Utilities.Handler
 
             return encodedToken;
         }
+
+        public JwtSecurityToken? DecodeToken(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var tokenClaims = handler.ReadToken(token) as JwtSecurityToken;
+
+            return tokenClaims;
+        }
     }
 }

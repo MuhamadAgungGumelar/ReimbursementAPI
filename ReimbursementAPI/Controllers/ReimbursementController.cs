@@ -4,6 +4,7 @@ using ReimbursementAPI.Contracts;
 using ReimbursementAPI.DTO.Reimbursement;
 using ReimbursementAPI.Repository;
 using ReimbursementAPI.Utilities.Handler;
+using System.Security.Claims;
 
 namespace ReimbursementAPI.Controllers
 {
@@ -12,22 +13,55 @@ namespace ReimbursementAPI.Controllers
     public class ReimbursementController : ControllerBase
     {
         private readonly IReimbursementRepository _reimbursementRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly ITokenHandler _tokenHandler;
 
-        public ReimbursementController(IReimbursementRepository reimbursementRepository)
+        public ReimbursementController(IReimbursementRepository reimbursementRepository, ITokenHandler tokenHandler, IEmployeeRepository employeeRepository)
         {
             _reimbursementRepository = reimbursementRepository;
+            _tokenHandler = tokenHandler;
+            _employeeRepository = employeeRepository;
         }
 
         // Get Reimbursement
         [HttpGet]
         public IActionResult GetAll()
         {
+            String header = Request.Headers["Authorization"];
+            header = header.Replace("Bearer ", "");
+            if (header == "")
+            {
+                return Unauthorized();
+            }
+            var token = _tokenHandler.DecodeToken(header);
+            var id = new Guid(token.Claims.First(claim => claim.Type == "Id").Value);
+            var role = token?.Claims.Last(claim => claim.Type == ClaimTypes.Role).Value;
+
             var result = _reimbursementRepository.GetAll(); //mengambil semua data Reimbursement
             if (!result.Any())
             {
                 return NotFound(new ResponseNotFoundHandler("Data not found"));
             }
-            var data = result.Select(x => (ReimbursementsDto)x);
+
+            if (role == "Manager")
+            {
+                var manager = from em in _employeeRepository.GetAll()
+                              join r in result on em.Guid equals r.EmployeeGuid
+                              where em.ManagerGuid == id
+                              select r;
+                if (!manager.Any())
+                {
+                    return NotFound(new ResponseNotFoundHandler("Data not found"));
+                }
+
+                var managerData = manager.Select(x => (ReimbursementsDto)x);
+                return Ok(new ResponseOKHandler<IEnumerable<ReimbursementsDto>>(managerData, "Data retrieve Successfully"));
+            }
+            var employee = from em in _employeeRepository.GetAll()
+                           join r in result on em.Guid equals r.EmployeeGuid
+                           where em.Guid == id
+                           select r;
+            var data = employee.Select(x => (ReimbursementsDto)x);
 
             return Ok(new ResponseOKHandler<IEnumerable<ReimbursementsDto>>(data, "Data retrieve Successfully"));
         }
