@@ -181,10 +181,49 @@
                     </div>
                     <ul class="navbar-nav  justify-content-end">
                         <li class="nav-item d-flex align-items-center">
-                            <a asp-area="" asp-controller="Auth" asp-action="LoginPage" class="nav-link text-body font-weight-bold px-0">
-                                <i class="fa fa-user me-sm-1"></i>
-                                <span class="d-sm-inline d-none">Sign In</span>
-                            </a>
+                            @using System.Security.Claims;
+                            @{
+                                var claimsIdentity = User.Identity as ClaimsIdentity;
+                                var name = "Anonym";
+                                var email = "";
+                                var guidEmployee = "";
+                                if (claimsIdentity != null)
+                                {
+                                    // Get the value of a specific claim
+                                    var emailClaim = claimsIdentity.FindFirst("Email");
+                                    var fullNameClaim = claimsIdentity.FindFirst("FullName");
+                                    var identifierClaim = claimsIdentity.FindFirst("Id");
+
+                                    if (emailClaim != null)
+                                    {
+                                        email = emailClaim.Value;
+                                    }
+
+                                    if (identifierClaim != null)
+                                    {
+                                        guidEmployee = identifierClaim.Value;
+                                    }
+
+                                    if (fullNameClaim != null)
+                                    {
+                                        name = fullNameClaim.Value;
+                                    }
+                                }
+                            }
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a asp-area="" asp-controller="Auth" asp-action="Logout" class="nav-link text-body font-weight-bold px-0">
+                                    <i class="fa fa-user me-sm-1"></i>
+                                    <span class="d-sm-inline d-none">@name</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-area="" asp-controller="Auth" asp-action="Logout" class="nav-link text-body font-weight-bold px-0">
+                                    <i class="fa fa-user me-sm-1"></i>
+                                    <span class="d-sm-inline d-none">@name</span>
+                                </a>
+                            }
                         </li>
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                             <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
