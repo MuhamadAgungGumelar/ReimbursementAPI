@@ -41,6 +41,7 @@
             tableAdmin();
             tableReimbursementManager();
             tableReimbursementFinance();
+            tableEmployeeManager();
         });
     });
 });
@@ -69,7 +70,20 @@ function tableReimbursement() {
                 data: "description"
             },
             {
-                data: "status"
+                data: "status",
+                render: function (data, type, row) {
+                    if (row.status === 0) {
+                        return "waiting_manager_approval_reimburse"
+                    } else if (row.status === 1) {
+                        return "waiting_finances_approval_reimburse"
+                    } else if (row.status === 2) {
+                        return "reimburse_approved"
+                    } else if (row.status === 3) {
+                        return "reimburse_rejected_by_manager"
+                    } else if (row.status === 4) {
+                        return "reimburse_rejected_by_finances"
+                    }
+                }
             },
             {
                 data: "createdDate",
@@ -258,6 +272,51 @@ function tableReimbursementFinance() {
                     return `<button class="btn btn-link text-info text-sm mb-0 px-0 ms-0 approve-manager" onclick="updateFinances('${data.guid}','${meta.row}')" data-id="${row.id}"><i class="ni ni-send"></i></button>`;
                 }
             },
+        ]
+    });
+}
+
+function tableEmployeeManager() { 
+    const token = $("#token").data("token");
+    $("#table_ManagerEmployee").DataTable({
+        ajax: {
+            url: "https://localhost:7257/api/Employee",
+            dataSrc: "data",
+            dataType: "JSON",
+            type: 'GET',
+            headers: { "Authorization": 'Bearer ' + token }
+        },
+        columns: [
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return row.firstName + ' ' + (row.lastName ? row.lastName : '');
+                }
+            },
+            {
+                data: "birthDate"
+            },
+            {
+                data: "gender",
+                render: function (data, type, row) {
+                    return row.gender === 1 ? "Laki-laki" : "Perempuan";
+                }
+            },
+            {
+                data: "hiringDate"
+            },
+            {
+                data: "email"
+            },
+            {
+                data: "phoneNumber"
+            }
         ]
     });
 }

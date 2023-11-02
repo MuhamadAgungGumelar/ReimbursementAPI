@@ -62,6 +62,7 @@ $(document).ready(function () {
     });
 });
 
+
 const token = $("#token").data("token");
 let data
 $.ajax({
@@ -81,7 +82,6 @@ $.ajax({
 }).fail((error) => {
     console.log(error);
 })
-
 
 data.status = parseInt($("#status_id_manager" + row).val());
 
@@ -107,6 +107,7 @@ $.ajax({
         icon: 'success',
         confirmButtonText: 'OK!'
     })
+
     $('#employeeTable').DataTable().ajax.reload();
 }).fail((result) => {
     $("#failMessage").removeClass("alert-danger, alert-warning, alert-success").addClass("alert-danger").text(result.responseJSON.message[1] /*+ ", " + "All Field must be set"*/).show();
