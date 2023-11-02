@@ -1,5 +1,36 @@
 ﻿@model ReimbursementWebApp.Models.CreateReimburseViewModel
 
+@using System.Security.Claims;
+@{
+    var claimsIdentity = User.Identity as ClaimsIdentity;
+    var guidEmployee = "";
+    var email = "";
+    var name = "User";
+    if (claimsIdentity != null)
+    {
+        // Get the value of a specific claim
+        var identifierClaim = claimsIdentity.FindFirst("Id");
+        var emailClaim = claimsIdentity.FindFirst("Email");
+        var fullNameClaim = claimsIdentity.FindFirst("FullName");
+
+        if (identifierClaim != null)
+        {
+            guidEmployee = identifierClaim.Value;
+        }
+
+        if (emailClaim != null)
+        {
+            email = emailClaim.Value;
+        }
+
+
+        if (fullNameClaim != null)
+        {
+            name = fullNameClaim.Value;
+        }
+    }
+}
+
 <div class="container-fluid py-4" id="container-fluid">
     <div class="row">
         <div class="col-12">
@@ -9,10 +40,12 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <form asp-action="CreateReimbursement" class="form" enctype="multipart/form-data">
+                        <form asp-action="ReimbursementForm" class="form" enctype="multipart/form-data">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div id="employeeGuid" style="display: none;">
-                                <input asp-for="EmployeeGuid" value="@* dapetin employeeGuid dari session *@" />
+                            <div id="employeeGuid" style="display: none">
+                                <label asp-for="EmployeeGuid" class="control-label"></label>
+                                <input class="form-control" asp-for="EmployeeGuid" value="@guidEmployee" />
+                                <span asp-validation-for="EmployeeGuid" class="text-danger"></span>
                             </div>
                             <div class="row justify-content-center">
                                 <div class="col-6">
@@ -29,26 +62,30 @@
                             <div class="row">
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
-                                        <label for="reimbursement-name-column">Reimbursement Name</label>
-                                        <input asp-for="Name" type="text" id="reimbursement-name-column" class="form-control" placeholder="Reimbursement Name" name="Name">
+                                        <label asp-for="Name" class="control-label"></label>
+                                        <input class="form-control" asp-for="Name" />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
-                                        <label for="value-column">Value</label>
-                                        <input asp-for="Value" type="number" id="value-column" class="form-control" placeholder="Value" name="Value">
+                                        <label asp-for="Value" class="control-label"></label>
+                                        <input class="form-control" asp-for="Value" />
+                                        <span asp-validation-for="Value" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
-                                        <label for="status-column">Status</label>
-                                        <input asp-for="Status" type="number" id="status-column" class="form-control" name="Status" placeholder="Status">
+                                        <label asp-for="Status" class="control-label"></label>
+                                        <input class="form-control" asp-for="Status" />
+                                        <span asp-validation-for="Status" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
-                                        <label for="description-column">Description</label>
-                                        <input asp-for="Description" type="text" id="description-column" class="form-control" name="Description" placeholder="Description">
+                                        <label asp-for="Description" class="control-label"></label>
+                                        <input class="form-control" asp-for="Description" />
+                                        <span asp-validation-for="Description" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">

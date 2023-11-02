@@ -64,6 +64,10 @@ app.Use(async (context, next) =>
     await next();
 });
 
+app.UseAuthentication();
+
+app.UseAuthorization();
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
@@ -74,10 +78,6 @@ app.UseEndpoints(endpoints =>
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
 });
-
-app.UseAuthentication();
-
-app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
