@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReimbursementAPI.Contracts;
 using ReimbursementAPI.DTO.Employee;
@@ -9,13 +10,49 @@ namespace ReimbursementAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IAccountRepository _accountRepository;
 
-        public EmployeeController(IEmployeeRepository employeeRepository)
+        public EmployeeController(IEmployeeRepository employeeRepository, IAccountRepository accountRepository)
         {
             _employeeRepository = employeeRepository;
+            _accountRepository = accountRepository;
+        }
+
+        [HttpGet("employeeDetails")]
+        public IActionResult GetDetails()
+        {
+            var employee = _employeeRepository.GetAll(); //mengambil semua data Employee
+            if (!employee.Any())
+            {
+                return NotFound(new ResponseNotFoundHandler("Data not found"));
+            }
+            var account = _accountRepository.GetAll();
+            if (!account.Any())
+            {
+                return NotFound(new ResponseNotFoundHandler("Data not found"));
+            }
+
+            var details = from emp in employee
+                          join ac in account on emp.Guid equals ac.Guid
+                          select new EmployeeDetailDto
+                          {
+                              Guid = emp.Guid,
+                              FirstName = emp.FirstName,
+                              LastName = emp.LastName,
+                              BirthDate = emp.BirthDate,
+                              Gender = emp.Gender,
+                              HiringDate = emp.HiringDate,
+                              Email = emp.Email,
+                              PhoneNumber = emp.PhoneNumber,
+                              ManagerGuid = emp.ManagerGuid,
+                              IsActivated = ac.IsActivated
+                          };
+
+            return Ok(new ResponseOKHandler<IEnumerable<EmployeeDetailDto>>(details, "data retrieve successfully"));
         }
 
         //Logic untuk Get Employee
