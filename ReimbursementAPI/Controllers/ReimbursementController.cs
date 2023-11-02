@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReimbursementAPI.Contracts;
 using ReimbursementAPI.DTO.Reimbursement;
@@ -10,6 +11,7 @@ namespace ReimbursementAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ReimbursementController : ControllerBase
     {
         private readonly IReimbursementRepository _reimbursementRepository;
@@ -48,28 +50,51 @@ namespace ReimbursementAPI.Controllers
                 var manager = from em in _employeeRepository.GetAll()
                               join r in result on em.Guid equals r.EmployeeGuid
                               where em.ManagerGuid == id
-                              select r;
+                              select new
+                              {
+                                  r.EmployeeGuid,
+                                  EmployeeName = string.Concat(em.FirstName, " ", em.LastName),
+                                  r.Name,
+                                  r.Description,
+                                  r.Value,
+                                  r.ImageType,
+                                  r.Image,
+                                  r.Status,
+                                  r.CreatedDate
+                              };
                 if (!manager.Any())
                 {
                     return NotFound(new ResponseNotFoundHandler("Data not found"));
                 }
 
-                var managerData = manager.Select(x => (ReimbursementsDto)x);
-                return Ok(new ResponseOKHandler<IEnumerable<ReimbursementsDto>>(managerData, "Data retrieve Successfully"));
+                var managerData = manager.Select(x => (object)x);
+                return Ok(new ResponseOKHandler<IEnumerable<object>>(managerData, "Data retrieve Successfully"));
             }
 
             if (role == "Finances")
             {
-                var finance = from r in result
+                var finance = from em in _employeeRepository.GetAll()
+                              join r in result on em.Guid equals r.EmployeeGuid
                               orderby r.CreatedDate descending
-                              select r;
+                              select new
+                              {
+                                  r.EmployeeGuid,
+                                  EmployeeName = string.Concat(em.FirstName, " ", em.LastName),
+                                  r.Name,
+                                  r.Description,
+                                  r.Value,
+                                  r.ImageType,
+                                  r.Image,
+                                  r.Status,
+                                  r.CreatedDate
+                              };
                 if (!finance.Any())
                 {
                     return NotFound(new ResponseNotFoundHandler("Data not found"));
                 }
 
-                var financeData = finance.Select(x => (ReimbursementsDto)x);
-                return Ok(new ResponseOKHandler<IEnumerable<ReimbursementsDto>>(financeData, "Data retrieve Successfully"));
+                var financeData = finance.Select(x => (object)x);
+                return Ok(new ResponseOKHandler<IEnumerable<object>>(financeData, "Data retrieve Successfully"));
             }
 
             var employee = from em in _employeeRepository.GetAll()
