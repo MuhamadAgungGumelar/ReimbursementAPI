@@ -6,6 +6,6 @@ namespace ReimbursementWebApp.Contract
 {
     public interface IReimbursementRepository
     {
-        Task<ResponseOKHandler<NewReimbursementsDto>> Post(Reimbursements entity);
+        Task<ResponseOKHandler<NewReimbursementsDto>> Post(NewReimbursementsDto entity);
     }
 }
