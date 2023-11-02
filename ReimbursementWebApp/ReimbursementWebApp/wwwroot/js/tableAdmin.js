@@ -1,6 +1,5 @@
 $(document).ready(function () {
     const token = $("#token").data("token");
-    console.log(token)
     $("#table_Admin").DataTable({
         ajax: {
             url: "https://localhost:7257/api/Employee/employeeDetails",
@@ -41,10 +40,7 @@ $(document).ready(function () {
                 data: "phoneNumber"
             },
             {
-                data: "isActivated",
-                render: function (data, type, row) {
-                    return row.isActivated === 1 ? "Activated" : "Deactivated";
-                }
+                data: "isActivated"
             }
         ]
     });

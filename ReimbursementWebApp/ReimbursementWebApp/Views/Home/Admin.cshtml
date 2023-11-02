@@ -14,6 +14,10 @@
                 <div class="card-header pb-0">
                     <h6>List of Employee</h6>
                 </div>
+                @{
+                    var token = ViewData["Token"];
+                }
+                <div id="token" data-token="@token" style="display: none">@token</div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center justify-content-center mb-0" id="table_Admin">
