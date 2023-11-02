@@ -68,7 +68,7 @@ namespace ReimbursementWebApp.Controllers
 
             if (result != null && result.Code == 200)
             {
-                return RedirectToAction();
+                return RedirectToAction(nameof(Reimbursement));
             }
 
             return View(createReimbursementsDto);
