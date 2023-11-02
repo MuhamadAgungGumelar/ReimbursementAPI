@@ -36,6 +36,7 @@ $(document).ready(function () {
 
                     // Membuat select option
                     return `<select class="form-select w-45" id="status_id_manager${meta.row}">
+
                               <option value="0"${data === 0 ? " selected" : ""}>waiting_manager_approval_reimburse</option>
                               <option value="1"${data === 1 ? " selected" : ""}>waiting_finance_approval_reimburse</option>
                               <option value="3"${data === 3 ? " selected" : ""}>reimburse_rejected_by_manager</option>
@@ -58,10 +59,8 @@ $(document).ready(function () {
             },
         ]
     });
-
 });
 
-function updateManager(guid,row) {
     const token = $("#token").data("token");
     let data
     $.ajax({
@@ -82,7 +81,9 @@ function updateManager(guid,row) {
         console.log(error);
     })
 
+
     data.status = parseInt($("#status_id_manager"+row).val());
+
     console.log(data)
 
     $.ajax({
