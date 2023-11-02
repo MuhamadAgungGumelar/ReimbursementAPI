@@ -1,0 +1,45 @@
+﻿<div class="container-fluid py-4" id="container-fluid">
+    <div class="row align-items-lg-stretch">
+        <div class="col-lg-12" style="display:flex; justify-content: end;">
+            @{
+                string url;
+                url = Url.Action("AdminForm", "Home");
+            }
+            <a class="btn bg-gradient-success" id="Admin_Form" href="@url">Add Account</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4 px-3">
+                <div class="card-header pb-0">
+                    <h6>List of Employee</h6>
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center justify-content-center mb-0" id="table_Admin">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Id</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">FullName</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Birth Date</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Gender</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Hiring Date</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone Number</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tBody_Admin">
+                               
+                            </tbody>
+                        </table>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/tableAdmin.js" asp-append-version="true"></script>
+}
