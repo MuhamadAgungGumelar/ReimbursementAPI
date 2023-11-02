@@ -12,6 +12,7 @@ namespace ReimbursementAPI.DTO.Reimbursement
         public string ImageType { get; set; }
         public byte[] Image { get; set; }
         public StatusLevel Status { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         public static explicit operator ReimbursementsDto(Reimbursements reimbursements)
         {
@@ -25,6 +26,7 @@ namespace ReimbursementAPI.DTO.Reimbursement
                 ImageType = reimbursements.ImageType,
                 Image = reimbursements.Image,
                 Status = reimbursements.Status,
+                CreatedDate = reimbursements.CreatedDate,
             };
         }
 
