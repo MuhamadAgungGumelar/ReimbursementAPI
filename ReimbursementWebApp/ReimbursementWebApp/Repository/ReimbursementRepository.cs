@@ -27,7 +27,7 @@ namespace ReimbursementWebApp.Repository
             //httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", contextAccessor.HttpContext?.Session.GetString("JWToken"));
         }
 
-        public async Task<ResponseOKHandler<NewReimbursementsDto>> Post(Reimbursements entity)
+        public async Task<ResponseOKHandler<NewReimbursementsDto>> Post(NewReimbursementsDto entity)
         {
             ResponseOKHandler<NewReimbursementsDto> entityVM = null;
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");

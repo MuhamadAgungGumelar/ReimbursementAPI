@@ -21,6 +21,8 @@ namespace ReimbursementAPI.DTO.Reimbursement
                 Name = dto.Name,
                 Description = dto.Description,
                 Value = dto.Value,
+                ImageType = dto.ImageType,
+                Image = dto.Image,
                 Status = dto.Status,
                 CreatedDate = DateTime.Now,
                 ModifiedDate = DateTime.Now,
