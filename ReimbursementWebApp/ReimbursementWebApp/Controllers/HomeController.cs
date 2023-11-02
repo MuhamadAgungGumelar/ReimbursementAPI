@@ -107,6 +107,26 @@ namespace ReimbursementWebApp.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        [HttpGet("/unauthorized")]
+        public IActionResult Unauthorized()
+        {
+            return View("401");
+        }
+
+        [AllowAnonymous]
+        [HttpGet("/forbidden")]
+        public IActionResult Forbidden()
+        {
+            return View("403");
+        }
+
+        [AllowAnonymous]
+        [HttpGet("/notfound")]
+        public IActionResult NotFound()
+        {
+            return View("404");
+        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
