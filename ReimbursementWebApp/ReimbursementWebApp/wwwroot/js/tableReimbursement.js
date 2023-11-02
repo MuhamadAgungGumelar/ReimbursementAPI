@@ -26,10 +26,10 @@ $(document).ready(function () {
                 data: "status"
             },
             {
-                data: "date",
+                data: "createdDate",
             },
             {
-                data: "null",
+                data: null,
                 render: function (data, type, row, meta) {
                     return ``;
                 }
