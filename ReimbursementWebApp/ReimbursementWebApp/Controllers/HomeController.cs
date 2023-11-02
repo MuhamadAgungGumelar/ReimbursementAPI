@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ReimbursementAPI.DTO.Reimbursement;
 using ReimbursementAPI.Models;
 using ReimbursementWebApp.Contract;
 using ReimbursementWebApp.Models;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace ReimbursementWebApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IReimbursementRepository _reimbursementRepository;
@@ -24,6 +27,7 @@ namespace ReimbursementWebApp.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult LandingPage()
         {
             return View();
@@ -40,7 +44,7 @@ namespace ReimbursementWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateReimbursement(CreateReimburseViewModel createReimbursementsDto)
+        public async Task<IActionResult> ReimbursementForm(CreateReimburseViewModel createReimbursementsDto)
         {
             var newReimbursement = new NewReimbursementsDto
             {
