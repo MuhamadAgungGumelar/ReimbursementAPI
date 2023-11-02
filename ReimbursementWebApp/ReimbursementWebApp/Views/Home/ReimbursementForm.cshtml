@@ -6,6 +6,7 @@
     var guidEmployee = "";
     var email = "";
     var name = "User";
+    var status = 0;
     if (claimsIdentity != null)
     {
         // Get the value of a specific claim
@@ -76,16 +77,16 @@
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
-                                        <label asp-for="Status" class="control-label"></label>
-                                        <input class="form-control" asp-for="Status" />
-                                        <span asp-validation-for="Status" class="text-danger"></span>
+                                        <label asp-for="Description" class="control-label"></label>
+                                        <textarea class="form-control" asp-for="Description"></textarea>
+                                        <span asp-validation-for="Description" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label asp-for="Description" class="control-label"></label>
-                                        <input class="form-control" asp-for="Description" />
-                                        <span asp-validation-for="Description" class="text-danger"></span>
+                                    <div class="form-group" style="display: none">
+                                        <label asp-for="Status" class="control-label"></label>
+                                        <input class="form-control" asp-for="Status" value="@status" />
+                                        <span asp-validation-for="Status" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">
