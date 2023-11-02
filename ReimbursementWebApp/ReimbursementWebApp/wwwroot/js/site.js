@@ -85,12 +85,15 @@ function tableReimbursement() {
 };
 
 function tableAdmin() {
+    const token = $("#token").data("token");
+    console.log(token)
     $("#table_Admin").DataTable({
         ajax: {
-            url: "https://localhost:7257/api/Employee",
+            url: "https://localhost:7257/api/Employee/employeeDetails",
             dataSrc: "data",
             dataType: "JSON",
-            type: 'GET'
+            type: 'GET',
+            headers: { "Authorization": 'Bearer ' + token }
         },
         columns: [
             {
@@ -122,6 +125,12 @@ function tableAdmin() {
             },
             {
                 data: "phoneNumber"
+            },
+            {
+                data: "isActivated",
+                render: function (data, type, row) {
+                    return row.isActivated === 1 ? "Activated" : "Deactivated";
+                }
             }
         ]
     });

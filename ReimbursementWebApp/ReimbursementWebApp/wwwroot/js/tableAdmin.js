@@ -1,10 +1,13 @@
 $(document).ready(function () {
+    const token = $("#token").data("token");
+    console.log(token)
     $("#table_Admin").DataTable({
         ajax: {
-            url: "https://localhost:7257/api/Employee",
+            url: "https://localhost:7257/api/Employee/employeeDetails",
             dataSrc: "data",
             dataType: "JSON",
-            type: 'GET'
+            type: 'GET',
+            headers: { "Authorization": 'Bearer ' + token }
         },
         columns: [
             {
@@ -37,6 +40,12 @@ $(document).ready(function () {
             {
                 data: "phoneNumber"
             },
+            {
+                data: "isActivated",
+                render: function (data, type, row) {
+                    return row.isActivated === 1 ? "Activated" : "Deactivated";
+                }
+            }
         ]
     });
 
@@ -55,12 +64,16 @@ $(document).ready(function () {
 
         console.log(employee)
 
+        const token = $("#token").data("token");
+        console.log(token)
+
         $.ajax({
             url: "https://localhost:7257/api/Employee",
             type: "POST",
             data: JSON.stringify(employee),
             dataType: "json",
-            contentType: 'application/json;charset=utf-8'
+            contentType: 'application/json;charset=utf-8',
+            headers: { "Authorization": 'Bearer ' + token }
         }).done((result) => {
             console.log(result.message)
             $("#modalPoke").modal(`hide`);
