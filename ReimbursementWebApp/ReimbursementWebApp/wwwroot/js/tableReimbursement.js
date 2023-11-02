@@ -22,7 +22,20 @@ $(document).ready(function () {
                 data: "description"
             },
             {
-                data: "status"
+                data: "status",
+                render: function (data, type, row) {
+                    if (row.status === 0) {
+                        return "waiting_manager_approval_reimburse"
+                    } else if (row.status === 1) {
+                        return "waiting_finances_approval_reimburse"
+                    } else if (row.status === 2) {
+                        return "reimburse_approved"
+                    } else if (row.status === 3) {
+                        return "reimburse_rejected_by_manager"
+                    } else if (row.status === 4) {
+                        return "reimburse_rejected_by_finances"
+                    }
+                }
             },
             {
                 data: "createdDate",
