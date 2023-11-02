@@ -34,7 +34,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <div class="card mb-4">
+            <div class="card mb-4 px-3">
                 <div class="card-header pb-0">
                     <h6>List Employees</h6>
                 </div>
@@ -44,11 +44,13 @@
                         <table class="table align-items-center mb-0" id="table_ManagerEmployee">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employee</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Role</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hired</th>
-                                    <th class="text-secondary opacity-7"></th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Id</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">FullName</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Birth Date</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Gender</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Hiring Date</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Phone Number</th>
                                 </tr>
                             </thead>
                             <tbody id="tBody_ManagerEmployee">
@@ -193,4 +195,5 @@
 
 @section Scripts{
     <script src="~/js/tableManagerReimbursement.js" asp-append-version="true"></script>
+    <script src="~/js/tableManagerEmployees.js" asp-append-version="true"></script>
 }

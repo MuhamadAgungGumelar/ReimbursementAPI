@@ -61,6 +61,8 @@ $(document).ready(function () {
     });
 });
 
+
+function updateManager(guid, row) {
     const token = $("#token").data("token");
     let data
     $.ajax({
@@ -111,3 +113,4 @@ $(document).ready(function () {
         $("#failMessage").removeClass("alert-danger, alert-warning, alert-success").addClass("alert-danger").text(result.responseJSON.message[1] /*+ ", " + "All Field must be set"*/).show();
     })
 }
+
