@@ -23,6 +23,7 @@ $(document).ready(function () {
             },
             {
                 data: "createdDate",
+                render: DataTable.render.datetime('D/M/YYYY')
             },
             {
                 data: "status",
@@ -39,7 +40,6 @@ $(document).ready(function () {
                     return `<select class="form-select w-45" id="status_id_finances${meta.row}">
                               <option value="1"${data === 1 ? " selected" : ""}>waiting_finance_approval_reimburse</option>
                               <option value="2"${data === 2 ? " selected" : ""}>reimburse_approved</option>
-                              <option value="3"${data === 3 ? " selected" : ""}>reimburse_rejected_by_manager</option>
                               <option value="4"${data === 4 ? " selected" : ""}>reimburse_rejected_by_finances</option>
                             </select>`;
                 }
@@ -62,7 +62,7 @@ $(document).ready(function () {
     });
 });
 
-function updateFinances(guid,row) {
+function updateFinances(guid, row) {
     const token = $("#token").data("token");
     let data
     $.ajax({
@@ -83,7 +83,7 @@ function updateFinances(guid,row) {
         console.log(error);
     })
 
-    data.status = parseInt($("#status_id_finances"+row).val());
+    data.status = parseInt($("#status_id_finances" + row).val());
     console.log(data)
 
     $.ajax({
@@ -106,7 +106,7 @@ function updateFinances(guid,row) {
             icon: 'success',
             confirmButtonText: 'OK!'
         })
-        $('#employeeTable').DataTable().ajax.reload();
+        $('#table_FinanceReimbursement').DataTable().ajax.reload();
     }).fail((result) => {
         $("#failMessage").removeClass("alert-danger, alert-warning, alert-success").addClass("alert-danger").text(result.responseJSON.message[1] /*+ ", " + "All Field must be set"*/).show();
     })

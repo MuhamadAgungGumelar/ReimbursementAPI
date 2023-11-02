@@ -23,6 +23,7 @@ $(document).ready(function () {
             },
             {
                 data: "createdDate",
+                render: DataTable.render.datetime('D/M/YYYY')
             },
             {
                 data: "status",
@@ -61,53 +62,53 @@ $(document).ready(function () {
     });
 });
 
-    const token = $("#token").data("token");
-    let data
-    $.ajax({
-        url: "https://localhost:7257/api/Reimbursement/" + guid,
-        method: "GET",
-        contentType: 'application/json',
-        dataType: "json",
-        beforeSend: (req) => {
-            req.setRequestHeader("Authorization", "Bearer " + token)
-        },
-        async: false,
-        //success: (data) => {
-        //    return data.data
-        //}
-    }).done((resp) => {
-        data = resp.data
-    }).fail((error) => {
-        console.log(error);
+const token = $("#token").data("token");
+let data
+$.ajax({
+    url: "https://localhost:7257/api/Reimbursement/" + guid,
+    method: "GET",
+    contentType: 'application/json',
+    dataType: "json",
+    beforeSend: (req) => {
+        req.setRequestHeader("Authorization", "Bearer " + token)
+    },
+    async: false,
+    //success: (data) => {
+    //    return data.data
+    //}
+}).done((resp) => {
+    data = resp.data
+}).fail((error) => {
+    console.log(error);
+})
+
+
+data.status = parseInt($("#status_id_manager" + row).val());
+
+console.log(data)
+
+$.ajax({
+    url: "https://localhost:7257/api/Reimbursement/",
+    method: "PUT",
+    contentType: 'application/json',
+    dataType: "json",
+    beforeSend: (req) => {
+        req.setRequestHeader("Authorization", "Bearer " + token)
+    },
+    async: false,
+    data: JSON.stringify(data)
+    //success: (data) => {
+    //    return data.data
+    //}
+}).done((resp) => {
+    Swal.fire({
+        title: 'Success!',
+        text: resp.message,
+        icon: 'success',
+        confirmButtonText: 'OK!'
     })
-
-
-    data.status = parseInt($("#status_id_manager"+row).val());
-
-    console.log(data)
-
-    $.ajax({
-        url: "https://localhost:7257/api/Reimbursement/",
-        method: "PUT",
-        contentType: 'application/json',
-        dataType: "json",
-        beforeSend: (req) => {
-            req.setRequestHeader("Authorization", "Bearer " + token)
-        },
-        async: false,
-        data: JSON.stringify(data)
-        //success: (data) => {
-        //    return data.data
-        //}
-    }).done((resp) => {
-        Swal.fire({
-            title: 'Success!',
-            text: resp.message,
-            icon: 'success',
-            confirmButtonText: 'OK!'
-        })
-        $('#employeeTable').DataTable().ajax.reload();
-    }).fail((result) => {
-        $("#failMessage").removeClass("alert-danger, alert-warning, alert-success").addClass("alert-danger").text(result.responseJSON.message[1] /*+ ", " + "All Field must be set"*/).show();
-    })
+    $('#employeeTable').DataTable().ajax.reload();
+}).fail((result) => {
+    $("#failMessage").removeClass("alert-danger, alert-warning, alert-success").addClass("alert-danger").text(result.responseJSON.message[1] /*+ ", " + "All Field must be set"*/).show();
+})
 }
