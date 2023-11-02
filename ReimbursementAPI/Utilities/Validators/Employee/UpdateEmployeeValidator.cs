@@ -14,7 +14,7 @@ namespace ReimbursementAPI.Utilities.Validators.Employee
                 .NotEmpty()
                 .LessThanOrEqualTo(DateTime.Now.AddYears(-18)); //18 y.o
             RuleFor(e => e.Gender) //rule validator gender
-                .NotEmpty()
+                .NotNull()
                 .IsInEnum();
             RuleFor(e => e.HiringDate) //rule validator hiring date
                 .NotEmpty();
