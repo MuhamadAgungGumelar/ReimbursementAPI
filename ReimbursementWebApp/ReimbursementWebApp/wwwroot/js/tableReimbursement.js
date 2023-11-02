@@ -39,6 +39,7 @@ $(document).ready(function () {
             },
             {
                 data: "createdDate",
+                render: DataTable.render.datetime('D/M/YYYY')
             },
             {
                 data: null,

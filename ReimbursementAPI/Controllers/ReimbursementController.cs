@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReimbursementAPI.Contracts;
 using ReimbursementAPI.DTO.Reimbursement;
+using ReimbursementAPI.Models;
 using ReimbursementAPI.Repository;
 using ReimbursementAPI.Utilities.Handler;
 using System.Security.Claims;
@@ -75,6 +76,7 @@ namespace ReimbursementAPI.Controllers
             {
                 var finance = from em in _employeeRepository.GetAll()
                               join r in result on em.Guid equals r.EmployeeGuid
+                              where r.Status != Utilities.Enums.StatusLevel.reimburse_rejected_by_manager && r.Status != Utilities.Enums.StatusLevel.waiting_manager_approval_reimburse
                               orderby r.CreatedDate descending
                               select new
                               {
@@ -95,7 +97,7 @@ namespace ReimbursementAPI.Controllers
                 }
 
                 var financeData = finance.Select(x => (object)x);
-                return Ok(new ResponseOKHandler<IEnumerable<object>>(financeData, "Data retrieve Successfully"));
+                return Ok(new ResponseOKHandler<IEnumerable<object>>(finance, "Data retrieve Successfully"));
             }
 
             var employee = from em in _employeeRepository.GetAll()
@@ -138,17 +140,32 @@ namespace ReimbursementAPI.Controllers
 
         //Logic untuk PUT Reimbursement
         [HttpPut]
-        public IActionResult Update(ReimbursementsDto roleDto)
+        public IActionResult Update(ReimbursementsDto reimbursementDto)
         {
             try
             {
-                var entity = _reimbursementRepository.GetByGuid(roleDto.Guid);
+                var entity = _reimbursementRepository.GetByGuid(reimbursementDto.Guid);
                 if (entity is null)
                 {
                     return NotFound(new ResponseNotFoundHandler("Id not Found"));
                 }
 
-                _reimbursementRepository.Update(roleDto); //melakukan update Reimbursement
+                var toUpdate = new Reimbursements
+                {
+                    Guid = reimbursementDto.Guid,
+                    EmployeeGuid = reimbursementDto.EmployeeGuid,
+                    Name = reimbursementDto.Name,
+                    Description = reimbursementDto.Description,
+                    Value = reimbursementDto.Value,
+                    ImageType = reimbursementDto.ImageType,
+                    Image = reimbursementDto.Image,
+                    Status = reimbursementDto.Status,
+                    CreatedDate = entity.CreatedDate,
+                    ModifiedDate = DateTime.Now,
+                };
+
+
+                _reimbursementRepository.Update(toUpdate); //melakukan update Reimbursement
 
                 return Ok(new ResponseOKHandler<ReimbursementsDto>("Data has been Updated"));
 

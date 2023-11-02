@@ -32,6 +32,7 @@ $(document).ready(function () {
             },
             {
                 data: "hiringDate"
+                render: DataTable.render.datetime('D/M/YYYY')
             },
             {
                 data: "email"
