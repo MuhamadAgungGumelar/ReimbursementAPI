@@ -35,6 +35,7 @@ namespace ReimbursementAPI.DTO.Reimbursement
             return new Reimbursements
             {
                 Guid = reimbursementDto.Guid,
+                EmployeeGuid = reimbursementDto.EmployeeGuid,
                 Name = reimbursementDto.Name,
                 Description = reimbursementDto.Description,
                 Value = reimbursementDto.Value,
