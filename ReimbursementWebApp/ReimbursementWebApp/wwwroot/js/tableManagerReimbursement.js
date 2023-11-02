@@ -38,7 +38,7 @@ $(document).ready(function () {
                     return `<select class="form-select w-45" id="status_id">
                               <option value="0"${data === 0 ? " selected" : ""}>waiting_manager_approval_reimburse</option>
                               <option value="1"${data === 1 ? " selected" : ""}>waiting_finance_approval_reimburse</option>
-                              <option value="2"${data === 3 ? " selected" : ""}>reimburse_rejected_by_manager</option>
+                              <option value="3"${data === 3 ? " selected" : ""}>reimburse_rejected_by_manager</option>
                             </select>`;
                 }
             },
@@ -53,7 +53,7 @@ $(document).ready(function () {
             {
                 data: null,
                 render: function (data, type, row, meta) {
-                    return `<button class="btn btn-link text-info text-sm mb-0 px-0 ms-0 approve-manager" onclick="update('${data.guid}')" data-id="${row.id}"><i class="ni ni-send"></i></button>`;
+                    return `<button class="btn btn-link text-info text-sm mb-0 px-0 ms-0 approve-manager" onclick="update('${data.guid}')" data-id="${meta.row}"><i class="ni ni-send"></i></button>`;
                 }
             },
         ]
