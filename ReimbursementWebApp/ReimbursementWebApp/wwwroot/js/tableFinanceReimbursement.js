@@ -36,7 +36,7 @@ $(document).ready(function () {
                     };
 
                     // Membuat select option
-                    return `<select class="form-select w-45" id="status_id">
+                    return `<select class="form-select w-45" id="status_id_finances${meta.row}">
                               <option value="1"${data === 1 ? " selected" : ""}>waiting_finance_approval_reimburse</option>
                               <option value="2"${data === 2 ? " selected" : ""}>reimburse_approved</option>
                               <option value="3"${data === 3 ? " selected" : ""}>reimburse_rejected_by_manager</option>
@@ -55,14 +55,14 @@ $(document).ready(function () {
             {
                 data: null,
                 render: function (data, type, row, meta) {
-                    return `<button class="btn btn-link text-info text-sm mb-0 px-0 ms-0 approve-manager" onclick="update('${data.guid}')" data-id="${meta.row}"><i class="ni ni-send"></i></button>`;
+                    return `<button class="btn btn-link text-info text-sm mb-0 px-0 ms-0 approve-manager" onclick="updateFinances('${data.guid}','${meta.row}')" data-id="${row.id}"><i class="ni ni-send"></i></button>`;
                 }
             },
         ]
     });
 });
 
-function update(guid) {
+function updateFinances(guid,row) {
     const token = $("#token").data("token");
     let data
     $.ajax({
@@ -83,7 +83,8 @@ function update(guid) {
         console.log(error);
     })
 
-    data.status = parseInt($("#status_id").val());
+    data.status = parseInt($("#status_id_finances"+row).val());
+    console.log(data)
 
     $.ajax({
         url: "https://localhost:7257/api/Reimbursement/",
