@@ -52,6 +52,7 @@ namespace ReimbursementAPI.Controllers
                               where em.ManagerGuid == id
                               select new
                               {
+                                  r.Guid,
                                   r.EmployeeGuid,
                                   EmployeeName = string.Concat(em.FirstName, " ", em.LastName),
                                   r.Name,
@@ -78,6 +79,7 @@ namespace ReimbursementAPI.Controllers
                               orderby r.CreatedDate descending
                               select new
                               {
+                                  r.Guid,
                                   r.EmployeeGuid,
                                   EmployeeName = string.Concat(em.FirstName, " ", em.LastName),
                                   r.Name,
