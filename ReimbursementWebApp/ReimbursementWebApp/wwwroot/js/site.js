@@ -35,6 +35,97 @@
             pageLink2.text(pageName);
 
             history.pushState(null, null, url);
+
+            //Inisialisasi Tabel-tabel
+            tableReimbursement();
+            tableAdmin();
         });
     });
 });
+
+function tableReimbursement() {
+    const token = $("#token").data("token");
+    console.log(token)
+    $("#table_Reimbursement").DataTable({
+        ajax: {
+            url: "https://localhost:7257/api/Reimbursement",
+            dataSrc: "data",
+            dataType: "JSON",
+            type: 'GET',
+            headers: { "Authorization": 'Bearer ' + token }
+        },
+        columns: [
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
+            {
+                data: "name"
+            },
+            {
+                data: "description"
+            },
+            {
+                data: "status"
+            },
+            {
+                data: "createdDate",
+            },
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    return ``;
+                }
+            }
+        ]
+
+    });
+};
+
+function tableAdmin() {
+    $("#table_Admin").DataTable({
+        ajax: {
+            url: "https://localhost:7257/api/Employee",
+            dataSrc: "data",
+            dataType: "JSON",
+            type: 'GET'
+        },
+        columns: [
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return row.firstName + ' ' + (row.lastName ? row.lastName : '');
+                }
+            },
+            {
+                data: "birthDate"
+            },
+            {
+                data: "gender",
+                render: function (data, type, row) {
+                    return row.gender === 1 ? "Laki-laki" : "Perempuan";
+                }
+            },
+            {
+                data: "hiringDate"
+            },
+            {
+                data: "email"
+            },
+            {
+                data: "phoneNumber"
+            }
+        ]
+    });
+};
+
+
+
