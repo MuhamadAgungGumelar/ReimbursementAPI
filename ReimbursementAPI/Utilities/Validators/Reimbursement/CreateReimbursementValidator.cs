@@ -13,7 +13,7 @@ namespace ReimbursementAPI.Utilities.Validators.Reimbursement
             RuleFor(e => e.Value).NotEmpty();
             RuleFor(e => e.ImageType).NotEmpty();
             RuleFor(e => e.Image).NotEmpty();
-            RuleFor(e => e.Status).NotEmpty().IsInEnum();
+            RuleFor(e => e.Status).NotNull().IsInEnum();
         }
     }
 }
