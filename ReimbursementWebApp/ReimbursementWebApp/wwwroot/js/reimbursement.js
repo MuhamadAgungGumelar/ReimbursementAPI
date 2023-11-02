@@ -28,7 +28,6 @@ $(document).ready(function () {
             pageLink2.text(pageName2);
 
             history.pushState(null, null, url2);
-
         });
     });
 });

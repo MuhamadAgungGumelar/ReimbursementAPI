@@ -35,6 +35,8 @@ namespace ReimbursementWebApp.Controllers
 
         public IActionResult Reimbursement()
         {
+            var token = HttpContext.Session.GetString("JWToken");
+            ViewData["Token"] = token;
             return View();
         }
 
