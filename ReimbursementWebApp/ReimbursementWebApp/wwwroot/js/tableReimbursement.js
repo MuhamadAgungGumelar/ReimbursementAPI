@@ -1,6 +1,5 @@
 $(document).ready(function () {
     const token = $("#token").data("token");
-    console.log(token)
     $("#table_Reimbursement").DataTable({
         ajax: {
             url: "https://localhost:7257/api/Reimbursement",
@@ -31,9 +30,11 @@ $(document).ready(function () {
             {
                 data: null,
                 render: function (data, type, row, meta) {
-                    return ``;
+                    return `<button type="button" class="btn btn-link text-primary text-sm mb-0 px-0 ms-0" data-bs-toggle="modal" data-bs-target="#invoiceModal">
+                                <i class="fas fa-file-pdf text-lg me-1" aria-hidden="true"></i>
+                            </button>`;
                 }
-            }
+            },
         ]
 
     });

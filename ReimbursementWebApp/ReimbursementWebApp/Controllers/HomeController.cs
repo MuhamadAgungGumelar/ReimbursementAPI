@@ -78,11 +78,15 @@ namespace ReimbursementWebApp.Controllers
 
         public IActionResult Manager()
         {
+            var token = HttpContext.Session.GetString("JWToken");
+            ViewData["Token"] = token;
             return View();
         }
 
         public IActionResult Finance()
         {
+            var token = HttpContext.Session.GetString("JWToken");
+            ViewData["Token"] = token;
             return View();
         }
 
@@ -93,6 +97,8 @@ namespace ReimbursementWebApp.Controllers
 
         public IActionResult Admin()
         {
+            var token = HttpContext.Session.GetString("JWToken");
+            ViewData["Token"] = token;
             return View();
         }
 
