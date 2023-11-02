@@ -57,6 +57,21 @@ namespace ReimbursementAPI.Controllers
                 var managerData = manager.Select(x => (ReimbursementsDto)x);
                 return Ok(new ResponseOKHandler<IEnumerable<ReimbursementsDto>>(managerData, "Data retrieve Successfully"));
             }
+
+            if (role == "Finances")
+            {
+                var finance = from r in result
+                              orderby r.CreatedDate descending
+                              select r;
+                if (!finance.Any())
+                {
+                    return NotFound(new ResponseNotFoundHandler("Data not found"));
+                }
+
+                var financeData = finance.Select(x => (ReimbursementsDto)x);
+                return Ok(new ResponseOKHandler<IEnumerable<ReimbursementsDto>>(financeData, "Data retrieve Successfully"));
+            }
+
             var employee = from em in _employeeRepository.GetAll()
                            join r in result on em.Guid equals r.EmployeeGuid
                            where em.Guid == id
