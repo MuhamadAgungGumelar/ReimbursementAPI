@@ -11,7 +11,7 @@ namespace ReimbursementAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
     public class ReimbursementController : ControllerBase
     {
         private readonly IReimbursementRepository _reimbursementRepository;

@@ -35,7 +35,8 @@ $(document).ready(function () {
                     };
 
                     // Membuat select option
-                    return `<select class="form-select w-45" id="status_id${meta.row}">
+                    return `<select class="form-select w-45" id="status_id_manager${meta.row}">
+
                               <option value="0"${data === 0 ? " selected" : ""}>waiting_manager_approval_reimburse</option>
                               <option value="1"${data === 1 ? " selected" : ""}>waiting_finance_approval_reimburse</option>
                               <option value="3"${data === 3 ? " selected" : ""}>reimburse_rejected_by_manager</option>
@@ -53,15 +54,13 @@ $(document).ready(function () {
             {
                 data: null,
                 render: function (data, type, row, meta) {
-                    return `<button class="btn btn-link text-info text-sm mb-0 px-0 ms-0 approve-manager" onclick="update('${data.guid}','${meta.row}')" data-id="${row.id}"><i class="ni ni-send"></i></button>`;
+                    return `<button class="btn btn-link text-info text-sm mb-0 px-0 ms-0 approve-manager" onclick="updateManager('${data.guid}','${meta.row}')" data-id="${row.id}"><i class="ni ni-send"></i></button>`;
                 }
             },
         ]
     });
-
 });
 
-function update(guid,row) {
     const token = $("#token").data("token");
     let data
     $.ajax({
@@ -82,7 +81,9 @@ function update(guid,row) {
         console.log(error);
     })
 
-    data.status = parseInt($("#status_id"+row).val());
+
+    data.status = parseInt($("#status_id_manager"+row).val());
+
     console.log(data)
 
     $.ajax({
@@ -110,5 +111,3 @@ function update(guid,row) {
         $("#failMessage").removeClass("alert-danger, alert-warning, alert-success").addClass("alert-danger").text(result.responseJSON.message[1] /*+ ", " + "All Field must be set"*/).show();
     })
 }
-
-
