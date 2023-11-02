@@ -41,6 +41,7 @@
             tableAdmin();
             tableReimbursementManager();
             tableReimbursementFinance();
+            tableEmployeeManager();
         });
     });
 });
@@ -271,6 +272,51 @@ function tableReimbursementFinance() {
                     return `<button class="btn btn-link text-info text-sm mb-0 px-0 ms-0 approve-manager" onclick="updateFinances('${data.guid}','${meta.row}')" data-id="${row.id}"><i class="ni ni-send"></i></button>`;
                 }
             },
+        ]
+    });
+}
+
+function tableEmployeeManager() { 
+    const token = $("#token").data("token");
+    $("#table_ManagerEmployee").DataTable({
+        ajax: {
+            url: "https://localhost:7257/api/Employee",
+            dataSrc: "data",
+            dataType: "JSON",
+            type: 'GET',
+            headers: { "Authorization": 'Bearer ' + token }
+        },
+        columns: [
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return row.firstName + ' ' + (row.lastName ? row.lastName : '');
+                }
+            },
+            {
+                data: "birthDate"
+            },
+            {
+                data: "gender",
+                render: function (data, type, row) {
+                    return row.gender === 1 ? "Laki-laki" : "Perempuan";
+                }
+            },
+            {
+                data: "hiringDate"
+            },
+            {
+                data: "email"
+            },
+            {
+                data: "phoneNumber"
+            }
         ]
     });
 }
